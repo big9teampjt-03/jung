@@ -24,26 +24,26 @@
         <th>조회수</th>
         <th>작성일</th>
         <th>댓글수</th>
-        <th>좋아요</th>
       </tr>
     </thead>
     <tbody>
     <c:forEach items="${clists.content }" var="list">
       <tr>
         <td>${list.counselID}</td>
-        <td>${principal.user.username}</td>
+        <td>${list.username}</td>
 		<td><a href="/board/boardCounselview/${list.counselID}">${list.title}</a></td>
 		<td>${list.hitcount}</td>
 		<td>${list.regdate}</td>
 		<td>${list.replycnt}</td>
-		<td>${list.likes}</td>
       </tr>    
       </c:forEach> 
     </tbody>
-   
-     <button class="btn btn-primary"><a href="/board/boardCounselinsert">글쓰기</a></button>
-    
+   <p align="right">
+     <a href="/board/boardCounselinsert"><button class="btn btn-primary">글쓰기</button></a>
+    </p>
     </table>
+    
+  
     <ul class="pagination mt-3">
 
 			<!-- 이전 -->
@@ -58,7 +58,9 @@
 				<li class="page-item"><a class="page-link"
 					href="?page=${lists.number+1}&field=${param.field}&word=${param.word}">다음</a></li>
 			</c:if>
+			
 		</ul>
+		
 </div>
 
 </body>

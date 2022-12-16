@@ -27,14 +27,17 @@
 			<th>글내용</th>
 			<td colspan="3">${board.content }</td>
 		</tr>
+	<tr>
+			<th>이미지</th>
+			<td colspan="3"> 
+			<img class="card-img-top" src="/resources/img/${board.counselimage }" style="width:100%">
+		</tr>
+	<br/><br/>
 	</table>
-	<%-- <c:if test="${principal.user.username==board.user.username}">
+	<%-- <c:if test="${principal.user.username==board.user.username}"> --%>
 	<button type="button" class="btn btn-primary"  id="btnUpdate">수정</button>
 		<button type="button" class="btn btn-secondary" id="btnDelete">삭제</button>
-		</c:if> --%>
-	</div>
-	
-	<br/><br/>
+		<%-- </c:if> --%>
 	
 	<div class="container mt-5">
 		<div class="form-group">
@@ -44,26 +47,26 @@
 		
 		<button type="button" class="btn btn-success" id="BtnComment">댓글쓰기</button>
 	
-	<div class="mt-5">댓글(<span class ="replyCnt"></span>)</div>
+	<div class="mt-5">댓글(<span class ="replycnt"></span>)</div>
 	
 	<div id="replyResult"></div>
 	</div>
 	
-	<!-- <script>
+	<script>
 	var init=function(){
 		$.ajax({
 			type:"get",
-			url:"/reply/list/"+$("#num").val()
+			url:"/reply/boardCounsel/"+$("#counselID").val()
 		})
 		.done(function(resp){
 			var str="<table class='table table-hover'>"
 			$.each(resp,function(key,val){
 				str+="<tr>"
-				str+="<td>"+val.user.id+"</td>"//val은 내용
+				str+="<td>"+val.username+"</td>"//val은 내용
 				str+="<td>"+val.content+"</td>"
 				str+="<td>"+val.regdate+"</td>"
-				if("${principal.user.id}"==val.user.id){
-				str+="<td>"+"<a href='javascript:fdel("+val.cnum+")'>삭제</a>"+"</td>"
+				if("${principal.user.id}"==val.username){
+				str+="<td>"+"<a href='javascript:fdel("+val.comcounselID+")'>삭제</a>"+"</td>"
 				}
 				str+="</tr>"
 			})//each
@@ -72,13 +75,13 @@
 		})//done
 	}
 	
-	function fdel(cnum){
+	function fdel(ccounselID){
 		if(!confirm('정말 댓글을 삭제할까요?')){
 			return false;
 		}
 		$.ajax({
 			type:'DELETE',
-			url:"/reply/delete/"+cnum
+			url:"/reply/delete/"+comcounselID
 		})//ajax
 		.done(function(resp){
 			alert(resp+"번 댓글 삭제 완료")
@@ -100,12 +103,12 @@
 			return;
 		}
 		var data={
-				"bnum":$("#num").val(),
+				"comcounselID":$("#comcounselID").val(),
 				"content":$("#msg").val()
 		}
 		$.ajax({
 			type:"POST",
-			url:"/reply/insert/"+$("#num").val(),
+			url:"/reply/insert/"+$("#counselID").val(),
 			contentType:"application/json;charset=utf-8",
 			data:JSON.stringify(data)
 		})
@@ -122,7 +125,7 @@
 	
 	$("#btnUpdate").click(function(){
 		if(confirm("정말 수정할까요?")){
-			location.href="/board/update/${board.num}"
+			location.href="/board/boardCounselupdate/${board.counselID}"
 		}
 	})
 	
@@ -130,11 +133,11 @@
 		if(!confirm("정말 삭제 할까요?"))return
 		$.ajax({
 			type:"delete",
-			url:"/board/delete/${board.num}",
+			url:"/board/bcdelete/${board.counselID}",
 			success:function(resp){
 				if(resp=="success"){
 					alert("삭제성공")
-					location.href="/board/list"
+					location.href="/board/boardCounsel"
 				}
 			},
 			error:function(e){
@@ -143,4 +146,4 @@
 		})//ajax
 	})//btnDelete
 	init();
-	</script> -->
+	</script>

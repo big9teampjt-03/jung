@@ -24,35 +24,35 @@
         <th>조회수</th>
         <th>작성일</th>
         <th>댓글수</th>
-        <th>좋아요</th>
       </tr>
     </thead>
     <tbody>
     <c:forEach items="${qlists.content }" var="list">
       <tr>
-        <td>${list.counselID}</td>
-        <td>${principal.user.username}</td>
-		<td>${list.title}</td>
+        <td>${list.questionID}</td>
+        <td>${list.username}</td>
+		<td><a href="/board/boardQuestionview/${list.questionID}">${list.title}</td>
 		<td>${list.hitcount}</td>
 		<td>${list.regdate}</td>
 		<td>${list.replycnt}</td>
-		<td>${list.likes}</td>
       </tr>    
       </c:forEach> 
     </tbody>
-    <button class="btn btn-primary"><a href="/board/boardQuestioninsert">글쓰기</a></button>
+     <p align="right">
+     <a href="/board/boardQuestioninsert"><button class="btn btn-primary">글쓰기</button></a>
+    </p>
     </table>
     <ul class="pagination mt-3">
 
 			<!-- 이전 -->
-			<c:if test="${clists.first==false}">
+			<c:if test="${qlists.first==false}">
 				<li class="page-item"><a class="page-link"
 					href="?page=${lists.number-1}&field=${param.field}&word=${param.word}">이전</a></li>
 				<!-- 페이지 현재 번호는 number -->
 			</c:if>
 			
 			<!-- 다음 -->
-			<c:if test="${clists.last==false}">
+			<c:if test="${qlists.last==false}">
 				<li class="page-item"><a class="page-link"
 					href="?page=${lists.number+1}&field=${param.field}&word=${param.word}">다음</a></li>
 			</c:if>
