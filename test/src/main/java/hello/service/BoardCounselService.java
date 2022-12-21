@@ -51,32 +51,33 @@ public class BoardCounselService {
 	 */
 
 	//페이징 포함 전체보기
-	 public Page<BoardCounsel> findAll(Pageable pageable) {  
-			Page<BoardCounsel> lists = repository.findAll(pageable);// 아무 검색 없을때
-			  return lists; 
-			  }
+//	 public Page<BoardCounsel> findAll(Pageable pageable) {  
+//			Page<BoardCounsel> lists = repository.findAll(pageable);// 아무 검색 없을때
+//			  return lists; 
+//			  }
 	
 	// 페이징,검색 포함 전체보기
-//	public Page<BoardCounsel> findAll(String field, String word, Pageable pageable) {
-//
-//		Page<BoardCounsel> lists = repository.findAll(pageable);// 아무 검색 없을때
-//		if (field.equals("title")) {
-//			lists = repository.findByTitleContaining(word, pageable);
-//		} else if (field.equals("content")) {
-//			lists = repository.findByContentContaining(word, pageable);
-//		}
-//
-//		return lists;
-//	}
+	public Page<BoardCounsel> findAll(String field, String word, Pageable pageable) {
 
-	/*
-	 * public Long count(String field, String word) { Long count =
-	 * repository.count(); if (field.equals("title")) { count =
-	 * repository.cntTitleSearch(word); } else if (field.equals("content")) { count
-	 * = repository.cntContentSearch(word); }
-	 * 
-	 * return count; }
-	 */
+		Page<BoardCounsel> lists = repository.findAll(pageable);// 아무 검색 없을때
+		if (field.equals("title")) {
+			lists = repository.findByTitleContaining(word, pageable);
+		} else if (field.equals("content")) {
+			lists = repository.findByContentContaining(word, pageable);
+		}
+
+		return lists;
+	}
+
+	 public Long count(String field, String word) {
+			Long count = repository.count();
+			if(field.equals("title")) {
+				count=repository.cntTitleSearch(word);
+			}else if (field.equals("content")){
+				count=repository.cntContentSearch(word);
+			}
+			return count;
+		}
 
 	public Long count() {
 		return repository.count();

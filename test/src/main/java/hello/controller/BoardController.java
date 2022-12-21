@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import hello.config.auth.PrincipalUser;
@@ -42,15 +43,30 @@ public class BoardController {
 	@Autowired
 	private CommentCounselService commentservice;
 	
-	//전문의상담게시판 전체보기
-	@GetMapping("boardCounsel")
-	public String boardCounsel(Model model,
-		 @PageableDefault(size=5,sort="counselID",direction=Direction.DESC) Pageable
-		 pageable) {
-		Page<BoardCounsel> lists =bcservice.findAll(pageable);
-		model.addAttribute("clists",lists);
-		return "/board/boardCounsel";
-	}
+	//전문의상담게시판 페이징 전체보기
+//	@GetMapping("boardCounsel")
+//	public String boardCounsel(Model model,
+//		 @PageableDefault(size=5,sort="counselID",direction=Direction.DESC) Pageable
+//		 pageable) {
+//		Page<BoardCounsel> lists =bcservice.findAll(pageable);
+//		model.addAttribute("clists",lists);
+//		return "/board/boardCounsel";
+//	}
+	
+	//전문의상담게시판 페이징 검색 전체보기
+		@GetMapping("boardCounsel")
+		public String boardCounsel(Model model,
+			 @PageableDefault(size=5,sort="counselID",direction=Direction.DESC) Pageable
+			 pageable,
+			 @RequestParam(required=false, defaultValue="")String field,
+			 @RequestParam(required=false, defaultValue="")String word) {
+			Page<BoardCounsel> lists =bcservice.findAll(field, word, pageable);
+			Long count = bcservice.count(field,word);
+			model.addAttribute("count",count);
+			model.addAttribute("clists",lists);
+			return "/board/boardCounsel";
+		}
+		
 	//전문의상담게시판 상세보기
 	@GetMapping("boardCounselview/{counselID}")
 	public String bcview(@PathVariable Long counselID, Model model) {

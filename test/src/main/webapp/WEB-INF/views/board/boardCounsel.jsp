@@ -47,7 +47,7 @@
     </p> 
      </table>
     
-  
+  <div class="d-flex justify-content-between">
     <ul class="pagination mt-3">
 
 			<!-- 이전 -->
@@ -64,7 +64,15 @@
 			</c:if>
 			
 		</ul>
-		
+	<form class="form-inline" action="/board/boardCounsel" method="get">
+			<select name='field' id="field" class="form-control mr-sm-1">
+				<option value="title">제목</option>
+				<option value="content">내용</option>
+			</select> <input type='text' name='word' class="form-control"
+				placeholder="Search">
+			<button class='btn btn-secondary'>Search</button>
+		</form>	
+</div>
 </div>
 
 </body>
